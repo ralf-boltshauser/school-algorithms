@@ -1,0 +1,11 @@
+<label for="searchTerm">Your search term
+    <input type="text" id="searchTerm" (change)="matchWords($event.target.value)" [value]="searchTerm">
+</label>
+<label for="maxDistance">Your max Distance
+    <input type="number" id="maxDistance" (change)="updateDistance($event.target.value)" [value]="maxDistance">
+</label>
+<button (click)="submit()">Submit</button>
+
+<div>
+    <p *ngFor="let product of filteredProducts">{{product}}</p>
+</div>
