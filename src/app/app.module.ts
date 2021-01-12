@@ -6,8 +6,10 @@ import { AppComponent } from './app.component';
 import { LevinshtenComponent } from './levinshten/levinshten.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-levinshten',
   templateUrl: './levinshten.component.html',
@@ -22,9 +22,18 @@ export class LevinshtenComponent implements OnInit {
   ];
 
   filteredProducts: string[] = [];
-  constructor() {}
+  constructor(private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
+    if (
+      this.levenshtein('', 'cat') == 3 &&
+      this.levenshtein('cat', 'dot') == 2
+    ) { 
+      this._snackBar.open('Levenshtein is up and running successfully', 'Close', { duration: 5000 });
+    } else {
+      this._snackBar.open('Something went wrong, please restart or contact the developer.', 'Close', { duration: 5000 });
+
+    }
   }
 
   updateDistance(value: number) {
@@ -68,16 +77,13 @@ export class LevinshtenComponent implements OnInit {
       firstRow[j] = j;
     }
     for (let i = 1; i <= bLength; ++i) {
-
       for (let j = 1; j <= aLength; ++j) {
         if (a.charAt(j - 1) == b.charAt(i - 1)) {
           matrix[i][j] = matrix[i - 1][j - 1];
         } else {
-          matrix[i][j] = Math.min(
-            matrix[i - 1][j - 1],
-            matrix[i][j - 1],
-            matrix[i - 1][j]
-          ) + 1;
+          matrix[i][j] =
+            Math.min(matrix[i - 1][j - 1], matrix[i][j - 1], matrix[i - 1][j]) +
+            1;
         }
       }
     }
