@@ -3,27 +3,26 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-levinshten',
   templateUrl: './levinshten.component.html',
-  styleUrls: ['./levinshten.component.scss']
+  styleUrls: ['./levinshten.component.scss'],
 })
 export class LevinshtenComponent implements OnInit {
-
-  searchTerm: string = "";
+  searchTerm: string = '';
   maxDistance: number = 0;
   products: string[] = [
-    "Jet Ski",
-    "Jacuzzi",
-    "Banana",
-    "Apple",
-    "Iphone",
-    "Mac",
-    "Windows PC",
-    "Dog",
-    "Cat",
-    "Pet"
+    'Jet Ski',
+    'Jacuzzi',
+    'Banana',
+    'Apple',
+    'Iphone',
+    'Mac',
+    'Windows PC',
+    'Dog',
+    'Cat',
+    'Pet',
   ];
 
   filteredProducts: string[] = [];
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }
@@ -36,14 +35,12 @@ export class LevinshtenComponent implements OnInit {
     if (value != null && value != this.searchTerm) {
       this.searchTerm = value;
     }
-    console.log(this.searchTerm);
     this.filteredProducts = [];
     this.products.forEach((product) => {
       if (this.levenshtein(this.searchTerm, product) <= this.maxDistance) {
-        this.filteredProducts.push(product); 
+        this.filteredProducts.push(product);
       }
-    })
-
+    });
   }
 
   submit() {
@@ -51,6 +48,41 @@ export class LevinshtenComponent implements OnInit {
   }
 
   levenshtein(a: string, b: string): number {
-    //Algorithmus kommt hier
-    return 0;
+    const aLength: number = a.length;
+    const bLength: number = b.length;
+
+    if (aLength == 0) {
+      return bLength;
+    }
+    if (bLength == 0) {
+      return aLength;
+    }
+
+    const matrix = new Array<number[]>(bLength + 1);
+    for (let i = 0; i <= bLength; ++i) {
+      let row = (matrix[i] = new Array<number>(aLength + 1));
+      row[0] = i;
+    }
+    const firstRow = matrix[0];
+    for (let j = 1; j <= aLength; ++j) {
+      firstRow[j] = j;
+    }
+    for (let i = 1; i <= bLength; ++i) {
+
+      for (let j = 1; j <= aLength; ++j) {
+        if (a.charAt(j - 1) == b.charAt(i - 1)) {
+          matrix[i][j] = matrix[i - 1][j - 1];
+        } else {
+          matrix[i][j] = Math.min(
+            matrix[i - 1][j - 1],
+            matrix[i][j - 1],
+            matrix[i - 1][j]
+          ) + 1;
+        }
+      }
+    }
+    //console.log(matrix);
+
+    return matrix[bLength][aLength];
+  }
 }

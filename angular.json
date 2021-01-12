@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "levinshtein-distnace"
+    }
+  },
+  "defaultProject": "levinshtein-distnace",
+  "cli": {
+    "analytics": false
+  }
 }
