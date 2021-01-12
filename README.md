@@ -14,3 +14,6 @@ The algorithm is very efficent and I can't think about any other solution. I alr
 
 ### Complexity
 The algorithm code is complex to understand, but the time and storage complexity isn't high at all because I only check one word at once and so it isn't high. 
+
+### Sources
+https://gist.github.com/keesey/e09d0af833476385b9ee13b6d26a2b84
